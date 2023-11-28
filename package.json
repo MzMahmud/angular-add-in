@@ -19,6 +19,9 @@
     "@angular/platform-browser": "^17.0.0",
     "@angular/platform-browser-dynamic": "^17.0.0",
     "@angular/router": "^17.0.0",
+    "@microsoft/office-js": "^1.1.89",
+    "@microsoft/office-js-helpers": "^1.0.2",
+    "office-ui-fabric-js": "^1.5.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.2"
@@ -28,12 +31,17 @@
     "@angular/cli": "^17.0.3",
     "@angular/compiler-cli": "^17.0.0",
     "@types/jasmine": "~5.1.0",
+    "@types/office-js": "^1.0.361",
+    "@types/office-runtime": "^1.0.35",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "office-addin-debugging": "^5.0.14",
+    "office-addin-dev-certs": "^1.12.0",
+    "office-toolbox": "^0.3.0",
     "typescript": "~5.2.2"
   }
 }
