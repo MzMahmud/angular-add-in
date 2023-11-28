@@ -5,4 +5,10 @@ import { Component } from '@angular/core';
   templateUrl: './counter.component.html',
   styleUrl: './counter.component.css',
 })
-export class CounterComponent {}
+export class CounterComponent {
+  count = 0;
+
+  changeCount(diff: number) {
+    this.count += diff;
+  }
+}
