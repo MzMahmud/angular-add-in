@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" data-critters-container>
+  <head>
+    <meta charset="utf-8">
+    <title>AngularAddIn</title>
+    <base href="/angular-add-in">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+    <script>
+      let pushStateRef = history.pushState;
+      let replaceStateRef = history.replaceState;
+    </script>
+
+    <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js"></script>
+
+    <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-js/1.4.0/css/fabric.min.css">
+
+    <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-js/1.4.0/css/fabric.components.min.css">
+
+    <script src="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-js/1.4.0/js/fabric.min.js"></script>
+
+    <script>
+      history.pushState = pushStateRef;
+      history.replaceState = replaceStateRef;
+      delete pushStateRef;
+      delete replaceStateRef;
+    </script>
+  <link rel="stylesheet" href="styles-5INURTSO.css"></head>
+  <body>
+    <app-root></app-root>
+  <script src="polyfills-LZBJRJJE.js" type="module"></script><script src="main-HQ3DBZ55.js" type="module"></script></body>
+</html>
