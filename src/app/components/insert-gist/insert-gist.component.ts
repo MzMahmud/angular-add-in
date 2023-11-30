@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Gist, getHtmlContent } from '../../models/gist.model';
-import { setSelectedDataAsHtml } from '../../util/office-api';
+import { OfficeService } from '../../services/office.service';
 
 @Component({
   selector: 'app-insert-gist',
@@ -56,6 +56,8 @@ export class InsertGistComponent {
 
   errorMessage: string | null = null;
 
+  constructor(private officeService: OfficeService) {}
+
   async insertGist(gistId: string | null) {
     this.errorMessage = null;
     if (gistId == null) {
@@ -67,7 +69,9 @@ export class InsertGistComponent {
       this.showError(`Invalid Gist!`);
       return;
     }
-    const res = await setSelectedDataAsHtml(getHtmlContent(gist));
+    const res = await this.officeService.setSelectedDataAsHtml(
+      getHtmlContent(gist)
+    );
     if (res.status === 'ERROR') {
       this.showError(res.message);
       return;
