@@ -12,7 +12,7 @@ import { Observable, catchError, of } from 'rxjs';
 export class InsertGistComponent implements OnInit {
   $gists: Observable<Gist[]> = of();
 
-  selectedGistId: string | null = null;
+  selectedGist: Gist | null = null;
 
   errorMessage: string | null = null;
 
@@ -30,20 +30,14 @@ export class InsertGistComponent implements OnInit {
     );
   }
 
-  async insertGist(gistId: string | null) {
-    this.errorMessage = null;
-    if (gistId == null) {
+  async insertGist(gist: Gist | null) {
+    if (gist == null) {
       this.showError(`No gist is selected!`);
       return;
     }
-    const gist = null;
-    if (gist == null) {
-      this.showError(`Invalid Gist!`);
-      return;
-    }
-    const res = await this.officeService.setSelectedDataAsHtml(
-      getHtmlContent(gist)
-    );
+    const content = await this.gistService.getContent(gist);
+    const htmlContent = getHtmlContent(gist, content);
+    const res = await this.officeService.setSelectedDataAsHtml(htmlContent);
     if (res.status === 'ERROR') {
       this.showError(res.message);
       return;

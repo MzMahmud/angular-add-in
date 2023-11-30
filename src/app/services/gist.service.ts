@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, catchError, firstValueFrom, map } from 'rxjs';
 import { Gist } from '../models/gist.model';
 
 @Injectable({
@@ -16,6 +16,18 @@ export class GistService {
       .pipe(
         map((gistResponses) => gistResponses.map(mapGistResponseToGists).flat())
       );
+  }
+
+  async getContent(gist: Gist) {
+    const $content = this.http
+      .get(gist.contentUrl, { responseType: 'text' })
+      .pipe(
+        catchError((_) => {
+          console.error('error fetching content');
+          return '';
+        })
+      );
+    return await firstValueFrom($content);
   }
 }
 

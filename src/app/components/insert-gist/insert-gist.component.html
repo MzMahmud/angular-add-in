@@ -9,8 +9,8 @@
         <input
           type="radio"
           name="color"
-          [value]="gist.id"
-          [(ngModel)]="selectedGistId"
+          [value]="gist"
+          [(ngModel)]="selectedGist"
         />
         {{ gist.title }}
         <div class="gist__detail">
@@ -29,8 +29,8 @@
     <button
       class="ms-Button ms-Button--primary"
       id="insert-button"
-      [disabled]="selectedGistId == null"
-      (click)="insertGist(selectedGistId)"
+      [disabled]="selectedGist == null"
+      (click)="insertGist(selectedGist)"
     >
       <span class="ms-Button-label">Insert</span>
     </button>
