@@ -18,7 +18,7 @@ export class GistService {
       );
   }
 
-  async getContent(gist: Gist) {
+  async getContent(gist: Gist): Promise<string> {
     const $content = this.http
       .get(gist.contentUrl, { responseType: 'text' })
       .pipe(
@@ -27,7 +27,7 @@ export class GistService {
           return '';
         })
       );
-    return await firstValueFrom($content);
+    return firstValueFrom($content);
   }
 }
 
