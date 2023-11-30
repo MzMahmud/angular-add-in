@@ -8,8 +8,8 @@
   <Version>1.0.0.0</Version>
   <ProviderName>Enosis</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
-  <DisplayName DefaultValue="Angular Addin" />
-  <Description DefaultValue="A template to get started." />
+  <DisplayName DefaultValue="GitHub Gists" />
+  <Description DefaultValue="Allows users to access their GitHub gists." />
   <IconUrl DefaultValue="https://localhost:3000/assets/icon-64.png" />
   <HighResolutionIconUrl DefaultValue="https://localhost:3000/assets/icon-128.png" />
   <SupportUrl DefaultValue="https://www.contoso.com/help" />
@@ -27,7 +27,7 @@
   <FormSettings>
     <Form xsi:type="ItemRead">
       <DesktopSettings>
-        <SourceLocation DefaultValue="https://localhost:3000/index.html" />
+        <SourceLocation DefaultValue="https://localhost:3000/" />
         <RequestedHeight>250</RequestedHeight>
       </DesktopSettings>
     </Form>
@@ -49,15 +49,17 @@
       <Hosts>
         <Host xsi:type="MailHost">
           <DesktopFormFactor>
-            <!-- Message Read mode-->
-            <ExtensionPoint xsi:type="MessageReadCommandSurface">
+            <!-- TODO: to add <Action xsi:type="ExecuteFunction"> FunctionFile is needed. Need r&d
+            to access what is the function  -->
+            <FunctionFile resid="Commands.Url" />
+            <ExtensionPoint xsi:type="MessageComposeCommandSurface">
               <OfficeTab id="TabDefault">
-                <Group id="msgReadGroup">
+                <Group id="msgComposeCmdGroup">
                   <Label resid="GroupLabel" />
-                  <Control xsi:type="Button" id="msgReadOpenPaneButton">
+                  <Control xsi:type="Button" id="msgComposeInsertGist">
                     <Label resid="TaskpaneButton.Label" />
                     <Supertip>
-                      <Title resid="TaskpaneButton.Label" />
+                      <Title resid="TaskpaneButton.Title" />
                       <Description resid="TaskpaneButton.Tooltip" />
                     </Supertip>
                     <Icon>
@@ -67,8 +69,21 @@
                     </Icon>
                     <Action xsi:type="ShowTaskpane">
                       <SourceLocation resid="Taskpane.Url" />
-                      <!-- Enables your add-in to activate on multiple selected messages. -->
-                      <SupportsMultiSelect>true</SupportsMultiSelect>
+                    </Action>
+                  </Control>
+                  <Control xsi:type="Button" id="msgComposeInsertDefaultGist">
+                    <Label resid="FunctionButton.Label" />
+                    <Supertip>
+                      <Title resid="FunctionButton.Title" />
+                      <Description resid="FunctionButton.Tooltip" />
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="Icon.16x16" />
+                      <bt:Image size="32" resid="Icon.32x32" />
+                      <bt:Image size="80" resid="Icon.80x80" />
+                    </Icon>
+                    <Action xsi:type="ExecuteFunction">
+                      <FunctionName>insertDefaultGist</FunctionName>
                     </Action>
                   </Control>
                 </Group>
@@ -84,15 +99,21 @@
           <bt:Image id="Icon.80x80" DefaultValue="https://localhost:3000/assets/icon-80.png" />
         </bt:Images>
         <bt:Urls>
-          <bt:Url id="Taskpane.Url" DefaultValue="https://localhost:3000/index.html" />
+          <bt:Url id="Commands.Url" DefaultValue="https://localhost:3000/index.html" />
+          <bt:Url id="Taskpane.Url" DefaultValue="https://localhost:3000/" />
         </bt:Urls>
         <bt:ShortStrings>
-          <bt:String id="GroupLabel" DefaultValue="Angular Addins" />
-          <bt:String id="TaskpaneButton.Label" DefaultValue="Taskpane" />
+          <bt:String id="GroupLabel" DefaultValue="Git the gist" />
+          <bt:String id="TaskpaneButton.Label" DefaultValue="Insert gist" />
+          <bt:String id="TaskpaneButton.Title" DefaultValue="Insert gist" />
+          <bt:String id="FunctionButton.Label" DefaultValue="Insert default gist" />
+          <bt:String id="FunctionButton.Title" DefaultValue="Insert default gist" />
         </bt:ShortStrings>
         <bt:LongStrings>
           <bt:String id="TaskpaneButton.Tooltip"
-            DefaultValue="Opens a pane which displays an option to retrieve the subject line of selected messages." />
+            DefaultValue="Displays a list of your gists and allows you to insert their contents into the current message." />
+          <bt:String id="FunctionButton.Tooltip"
+            DefaultValue="Inserts the content of the gist you mark as default into the current message." />
         </bt:LongStrings>
       </Resources>
     </VersionOverrides>
