@@ -1,0 +1,33 @@
+.header {
+  width: 100%;
+  text-align: center;
+  background-color: azure;
+  padding: 5px;
+}
+
+.gists-section {
+  margin-top: 10px;
+  padding: 10px;
+}
+
+.gist {
+  margin: 10px;
+}
+
+.insert-btn {
+  display: block;
+  width: 100px;
+}
+
+.gist__detail {
+  font-size: .8rem;
+  color: gray;
+  margin-left: 20px;
+}
+
+.error-message {
+  margin-top: 10px;
+  padding: 20px;
+  color: tomato;
+  text-align: center;
+}
