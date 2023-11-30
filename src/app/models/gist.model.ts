@@ -3,8 +3,9 @@ export interface Gist {
   title: string;
   fileName: string;
   lastUpdated: Date;
-  content: string;
+  content?: string;
   language: string;
+  contentUrl?: string;
 }
 
 import showdown from 'showdown';
@@ -12,10 +13,10 @@ import showdown from 'showdown';
 export function getHtmlContent(gist: Gist) {
   switch (gist.language) {
     case 'HTML':
-      return gist.content;
+      return gist.content ?? '';
     case 'Markdown':
       const converter = new showdown.Converter();
-      return converter.makeHtml(gist.content);
+      return converter.makeHtml(gist.content ?? '');
     default:
       return `
       <pre>

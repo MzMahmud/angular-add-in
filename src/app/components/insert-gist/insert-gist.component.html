@@ -3,7 +3,7 @@
     <h2>Git the Gist</h2>
   </header>
   <section class="gists-section">
-    @for(gist of gists; track gist.id) {
+    @for(gist of $gists | async; track gist.id) {
     <div class="gist">
       <label>
         <input
