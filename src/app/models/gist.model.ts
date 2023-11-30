@@ -17,11 +17,6 @@ export function getHtmlContent(gist: Gist, content: string) {
       const converter = new showdown.Converter();
       return converter.makeHtml(content);
     default:
-      return `
-      <pre>
-      <code>
-        ${content}
-      </code>
-      </pre>`;
+      return `<pre><code>${content}</code></pre>`;
   }
 }
