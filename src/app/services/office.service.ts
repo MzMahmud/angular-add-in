@@ -48,4 +48,13 @@ export class OfficeService {
       );
     });
   }
+
+  getFromRoamingSettings<T>(key: string) {
+    const value = Office.context.roamingSettings.get(key);
+    return value == null ? null : (value as T);
+  }
+
+  setToRoamingSettings<T>(key: string, value: T) {
+    Office.context.roamingSettings.set(key, value);
+  }
 }

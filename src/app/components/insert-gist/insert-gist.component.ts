@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Observable, catchError, mergeMap, of } from 'rxjs';
 import { Gist, getHtmlContent } from '../../models/gist.model';
-import { OfficeService } from '../../services/office.service';
 import { GistService } from '../../services/gist.service';
-import { Observable, catchError, of } from 'rxjs';
+import { OfficeService } from '../../services/office.service';
+import { SettingsService } from '../../services/settings.service';
 import { getAbsoluteUrl } from '../../util/string.util';
 
 @Component({
@@ -10,7 +11,7 @@ import { getAbsoluteUrl } from '../../util/string.util';
   templateUrl: './insert-gist.component.html',
   styleUrl: './insert-gist.component.css',
 })
-export class InsertGistComponent implements OnInit {
+export class InsertGistComponent {
   $gists: Observable<Gist[]> = of();
 
   selectedGist: Gist | null = null;
@@ -19,13 +20,20 @@ export class InsertGistComponent implements OnInit {
 
   constructor(
     private officeService: OfficeService,
-    private gistService: GistService
-  ) {}
-
-  ngOnInit() {
-    this.$gists = this.gistService.getUserPublicGists('MzMahmud').pipe(
-      catchError((e) => {
-        console.log('error', e);
+    private gistService: GistService,
+    private settingsService: SettingsService
+  ) {
+    this.$gists = this.settingsService.$settings.pipe(
+      mergeMap((settings) => {
+        if (settings == null) {
+          this.showError('No github username is set!');
+          return of();
+        }
+        this.hideError();
+        return this.gistService.getUserPublicGists(settings.githubUsername);
+      }),
+      catchError((error) => {
+        console.error('error fetching gists', error);
         return of();
       })
     );
@@ -47,6 +55,10 @@ export class InsertGistComponent implements OnInit {
 
   showError(message: string) {
     this.errorMessage = message;
+  }
+
+  hideError() {
+    this.errorMessage = null;
   }
 
   async openSettingsDialogue() {
