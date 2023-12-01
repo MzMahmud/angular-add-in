@@ -37,10 +37,15 @@
 
 .btn-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
+  justify-content: space-around;
 }
 
 .insert-btn {
-  width: 150px;
+  width: 60vw;
+}
+
+.settings-btn {
+  margin-left: 5vw;
 }

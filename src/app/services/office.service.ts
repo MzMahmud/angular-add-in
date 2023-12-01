@@ -29,4 +29,23 @@ export class OfficeService {
       );
     });
   }
+
+  displayDialogAsync(
+    startAddress: string,
+    options?: Office.DialogOptions
+  ): Promise<AsyncResponse<Office.Dialog>> {
+    return new Promise((resolve) => {
+      Office.context.ui.displayDialogAsync(
+        startAddress,
+        options,
+        function (result) {
+          if (result.status === Office.AsyncResultStatus.Succeeded) {
+            resolve({ status: 'SUCCESS', value: result.value });
+            return;
+          }
+          resolve({ status: 'ERROR', message: result.error.message });
+        }
+      );
+    });
+  }
 }

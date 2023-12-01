@@ -3,6 +3,7 @@ import { Gist, getHtmlContent } from '../../models/gist.model';
 import { OfficeService } from '../../services/office.service';
 import { GistService } from '../../services/gist.service';
 import { Observable, catchError, of } from 'rxjs';
+import { getAbsoluteUrl } from '../../util/string.util';
 
 @Component({
   selector: 'app-insert-gist',
@@ -46,5 +47,28 @@ export class InsertGistComponent implements OnInit {
 
   showError(message: string) {
     this.errorMessage = message;
+  }
+
+  async openSettingsDialogue() {
+    const res = await this.officeService.displayDialogAsync(
+      getAbsoluteUrl('/#/settings'),
+      { width: 50, height: 30, displayInIframe: true }
+    );
+    if (res.status === 'ERROR') {
+      this.showError(res.message);
+      return;
+    }
+    const settingsDialog = res.value;
+    settingsDialog.addEventHandler(
+      Office.EventType.DialogMessageReceived,
+      (m) => {
+        console.warn(m);
+        settingsDialog.close();
+      }
+    );
+    settingsDialog.addEventHandler(
+      Office.EventType.DialogEventReceived,
+      console.warn
+    );
   }
 }
