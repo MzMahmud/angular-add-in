@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { Observable, catchError, mergeMap, of } from 'rxjs';
 import { Gist, getHtmlContent } from '../../models/gist.model';
+import { Settings } from '../../models/settings.model';
 import { GistService } from '../../services/gist.service';
 import { OfficeService } from '../../services/office.service';
 import { SettingsService } from '../../services/settings.service';
 import { getAbsoluteUrl } from '../../util/string.util';
-import { Settings } from '../../models/settings.model';
 
 @Component({
   selector: 'app-insert-gist',
@@ -22,7 +22,8 @@ export class InsertGistComponent {
   constructor(
     private officeService: OfficeService,
     private gistService: GistService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private zone: NgZone
   ) {
     this.$gists = this.settingsService.$settings.pipe(
       mergeMap((settings) => {
@@ -80,8 +81,12 @@ export class InsertGistComponent {
           return;
         }
         const settings = JSON.parse(response.message) as Settings;
-        await this.settingsService.updateSettings(settings);
-        settingsDialog.close();
+        // This needs to trigger UI Update
+        // Source: https://learn.microsoft.com/en-us/office/dev/add-ins/develop/add-ins-with-angular2#trigger-the-ui-update
+        this.zone.run(async () => {
+          await this.settingsService.updateSettings(settings);
+          settingsDialog.close();
+        });
       }
     );
   }
