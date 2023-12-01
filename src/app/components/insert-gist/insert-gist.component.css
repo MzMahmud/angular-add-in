@@ -5,12 +5,18 @@
   padding: 5px;
 }
 
-.gists-section {
-  height: 95vh;
+main {
+  height: 100vh;
   padding: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.gists-section {
+  height: 90%;
+  overflow: auto;
+  margin-bottom: 20px;
 }
 
 .gist {

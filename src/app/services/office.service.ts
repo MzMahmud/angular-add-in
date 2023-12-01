@@ -54,7 +54,14 @@ export class OfficeService {
     return value == null ? null : (value as T);
   }
 
-  setToRoamingSettings<T>(key: string, value: T) {
+  async setToRoamingSettings<T>(key: string, value: T) {
     Office.context.roamingSettings.set(key, value);
+    return new Promise<void>((resolve) => {
+      Office.context.roamingSettings.saveAsync(() => resolve());
+    });
+  }
+
+  messageParent(message: string) {
+    Office.context.ui.messageParent(message);
   }
 }

@@ -22,8 +22,8 @@ export class SettingsService {
     this.$settings.next(settings);
   }
 
-  updateSettings(settings: Settings) {
-    this.officeService.setToRoamingSettings(
+  async updateSettings(settings: Settings) {
+    await this.officeService.setToRoamingSettings(
       SettingsService.SETTINGS_KEY,
       settings
     );

@@ -1,51 +1,49 @@
 <main>
-  <section class="gists-section">
-    <div>
-      @for(gist of $gists | async; track gist.id) {
-      <div class="gist">
-        <label>
-          <input
-            type="radio"
-            name="gist"
-            [value]="gist"
-            [(ngModel)]="selectedGist"
-          />
-          {{ gist.title }}
-          <div class="gist__detail">
-            <div>{{ gist.fileName }}</div>
-            <div>Last Updated {{ gist.lastUpdated.toLocaleString() }}</div>
-          </div>
-        </label>
-      </div>
-      } @empty {
-      <div class="error-message">No gists found!</div>
-      }
+  <div class="gists-section">
+    @for(gist of $gists | async; track gist.id) {
+    <div class="gist">
+      <label>
+        <input
+          type="radio"
+          name="gist"
+          [value]="gist"
+          [(ngModel)]="selectedGist"
+        />
+        {{ gist.title }}
+        <div class="gist__detail">
+          <div>{{ gist.fileName }}</div>
+          <div>Last Updated {{ gist.lastUpdated.toLocaleString() }}</div>
+        </div>
+      </label>
     </div>
-
-    @if(errorMessage != null) {
-    <div class="error-message">
-      {{ errorMessage }}
-    </div>
+    } @empty {
+    <div class="error-message">No gists found!</div>
     }
+  </div>
 
-    <div class="btn-container">
-      <div>
-        <button
-          class="ms-Button ms-Button--primary insert-btn"
-          [disabled]="selectedGist == null"
-          (click)="insertGist(selectedGist)"
-        >
-          <span class="ms-Button-label">Insert</span>
-        </button>
-      </div>
-      <div>
-        <button
-          class="ms-Button ms-Button--secondary settings-btn"
-          (click)="openSettingsDialogue()"
-        >
-          ⚙️
-        </button>
-      </div>
+  @if(errorMessage != null) {
+  <div class="error-message">
+    {{ errorMessage }}
+  </div>
+  }
+
+  <div class="btn-container">
+    <div>
+      <button
+        class="ms-Button ms-Button--primary insert-btn"
+        [disabled]="selectedGist == null"
+        (click)="insertGist(selectedGist)"
+      >
+        <span class="ms-Button-label">Insert</span>
+      </button>
     </div>
-  </section>
+    <div>
+      <button
+        class="ms-Button ms-Button--secondary settings-btn"
+        (click)="openSettingsDialogue()"
+      >
+        ⚙️
+      </button>
+    </div>
+  </div>
 </main>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { OfficeService } from '../../services/office.service';
 
 @Component({
   selector: 'app-settings',
@@ -6,9 +7,22 @@ import { Component } from '@angular/core';
   styleUrl: './settings.component.css',
 })
 export class SettingsComponent {
-  clicked = 0;
-  sendMessage() {
-    Office.context.ui.messageParent('hello');
-    this.clicked++;
+  githubUsername: string | null = null;
+
+  constructor(private officeService: OfficeService) {}
+
+  saveSettings() {
+    if (!this.isSettingsValid()) {
+      return;
+    }
+    const settings = { githubUsername: this.githubUsername };
+    // IMPORTANT: this code is run is seperate dialogoue.
+    // Don't expect to make chnages to this and that change gets affected on the original app!
+    // Send message to parent and load settings there.
+    this.officeService.messageParent(JSON.stringify(settings));
+  }
+
+  isSettingsValid() {
+    return this.githubUsername != null && this.githubUsername != '';
   }
 }

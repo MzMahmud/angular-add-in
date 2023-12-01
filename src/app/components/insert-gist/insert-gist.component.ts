@@ -5,6 +5,7 @@ import { GistService } from '../../services/gist.service';
 import { OfficeService } from '../../services/office.service';
 import { SettingsService } from '../../services/settings.service';
 import { getAbsoluteUrl } from '../../util/string.util';
+import { Settings } from '../../models/settings.model';
 
 @Component({
   selector: 'app-insert-gist',
@@ -64,7 +65,7 @@ export class InsertGistComponent {
   async openSettingsDialogue() {
     const res = await this.officeService.displayDialogAsync(
       getAbsoluteUrl('/#/settings'),
-      { width: 50, height: 30, displayInIframe: true }
+      { width: 40, height: 30, displayInIframe: true }
     );
     if (res.status === 'ERROR') {
       this.showError(res.message);
@@ -73,14 +74,15 @@ export class InsertGistComponent {
     const settingsDialog = res.value;
     settingsDialog.addEventHandler(
       Office.EventType.DialogMessageReceived,
-      (m) => {
-        console.warn(m);
+      async (response) => {
+        if ('error' in response) {
+          console.error('dialogue message revived error', response.error);
+          return;
+        }
+        const settings = JSON.parse(response.message) as Settings;
+        await this.settingsService.updateSettings(settings);
         settingsDialog.close();
       }
-    );
-    settingsDialog.addEventHandler(
-      Office.EventType.DialogEventReceived,
-      console.warn
     );
   }
 }
