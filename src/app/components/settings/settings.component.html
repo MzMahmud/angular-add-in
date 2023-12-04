@@ -5,6 +5,13 @@
       <input type="text" name="githubUsername" [(ngModel)]="githubUsername" />
     </label>
   </div>
+  <div class="gists-section">
+    <label> Select Default Gist </label>
+    <app-gist-selector
+      [githubUsername]="githubUsername"
+      [(selectedGistId)]="defaultGistId"
+    />
+  </div>
   <div style="text-align: right">
     <button
       class="ms-Button ms-Button--primary"

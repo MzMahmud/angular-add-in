@@ -41,6 +41,7 @@ export class InsertGistComponent implements OnDestroy {
       this.showError('No github username is set!');
       return;
     }
+    this.selectedGistId = this.settings.defaultGistId;
     this.hideError();
   }
 
@@ -75,7 +76,7 @@ export class InsertGistComponent implements OnDestroy {
       getAbsoluteUrl('/#/settings'),
       this.settings ?? {}
     );
-    const dialogOption = { width: 40, height: 30, displayInIframe: true };
+    const dialogOption = { width: 40, height: 50, displayInIframe: true };
     const res = await this.officeService.displayDialogAsync(url, dialogOption);
     if (res.status === 'ERROR') {
       this.showError(res.message);

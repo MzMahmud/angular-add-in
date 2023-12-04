@@ -13,3 +13,9 @@ section {
   flex-direction: column;
   justify-content: space-between;
 }
+
+.gists-section {
+  height: 90%;
+  overflow: auto;
+  margin-bottom: 5px;
+}

@@ -2,6 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { OfficeService } from '../../services/office.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { Settings } from '../../models/settings.model';
 
 @Component({
   selector: 'app-settings',
@@ -9,7 +10,16 @@ import { Subscription } from 'rxjs';
   styleUrl: './settings.component.css',
 })
 export class SettingsComponent implements OnDestroy {
-  githubUsername: string | null = null;
+  private _githubUsername: string | null = null;
+  set githubUsername(value: string | null) {
+    this._githubUsername = value;
+    this.defaultGistId = null;
+  }
+  get githubUsername() {
+    return this._githubUsername;
+  }
+
+  defaultGistId: string | null = null;
   private queryParamMap$: Subscription;
 
   constructor(
@@ -19,6 +29,7 @@ export class SettingsComponent implements OnDestroy {
     this.queryParamMap$ = this.route.queryParamMap.subscribe(
       (queryParamMap) => {
         this.githubUsername = queryParamMap.get('githubUsername');
+        this.defaultGistId = queryParamMap.get('defaultGistId');
       }
     );
   }
@@ -31,7 +42,10 @@ export class SettingsComponent implements OnDestroy {
     if (!this.isSettingsValid()) {
       return;
     }
-    const settings = { githubUsername: this.githubUsername };
+    const settings: Settings = {
+      githubUsername: this.githubUsername ?? '',
+      defaultGistId: this.defaultGistId,
+    };
     // IMPORTANT: this code is run is seperate dialogoue.
     // Don't expect to make chnages to this and that change gets affected on the original app!
     // Send message to parent and load settings there.
