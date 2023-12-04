@@ -1,0 +1,26 @@
+<section>
+  <div>
+    <label>
+      Github Username
+      <input type="text" name="githubUsername" [(ngModel)]="githubUsername" />
+    </label>
+  </div>
+  <div>
+    <label> Select Default Gist </label>
+  </div>
+  <div class="gists-section">
+    <app-gist-selector
+      [githubUsername]="githubUsername"
+      [(selectedGistId)]="defaultGistId"
+    />
+  </div>
+  <div style="text-align: right">
+    <button
+      class="ms-Button ms-Button--primary"
+      (click)="saveSettings()"
+      [disabled]="!isSettingsValid()"
+    >
+      <span class="ms-Button-label">Save</span>
+    </button>
+  </div>
+</section>

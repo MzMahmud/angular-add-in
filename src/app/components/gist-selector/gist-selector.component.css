@@ -1,0 +1,16 @@
+.error-message {
+  margin-top: 10px;
+  padding: 20px;
+  color: tomato;
+  text-align: center;
+}
+
+.gist {
+  margin: 10px;
+}
+
+.gist__detail {
+  font-size: .8rem;
+  color: gray;
+  margin-left: 20px;
+}
