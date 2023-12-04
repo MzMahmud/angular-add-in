@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SettingsComponent } from './components/settings/settings.component';
 import { InsertGistComponent } from './components/insert-gist/insert-gist.component';
+import { ActionsComponent } from './components/actions/actions.component';
 
 const routes: Routes = [
   {
@@ -11,6 +12,10 @@ const routes: Routes = [
   {
     path: 'insert-gist',
     component: InsertGistComponent,
+  },
+  {
+    path: 'actions',
+    component: ActionsComponent,
   },
 ];
 

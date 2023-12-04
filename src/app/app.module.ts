@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SettingsComponent } from './components/settings/settings.component';
 import { GistSelectorComponent } from './components/gist-selector/gist-selector.component';
+import { ActionsComponent } from './components/actions/actions.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { GistSelectorComponent } from './components/gist-selector/gist-selector.
     InsertGistComponent,
     SettingsComponent,
     GistSelectorComponent,
+    ActionsComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
