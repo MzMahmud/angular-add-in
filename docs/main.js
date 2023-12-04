@@ -16707,27 +16707,6 @@ var AsyncPipe = /* @__PURE__ */ (() => {
   let AsyncPipe2 = _AsyncPipe;
   return AsyncPipe2;
 })();
-var JsonPipe = /* @__PURE__ */ (() => {
-  const _JsonPipe = class _JsonPipe {
-    /**
-     * @param value A value of any type to convert into a JSON-format string.
-     */
-    transform(value) {
-      return JSON.stringify(value, null, 2);
-    }
-  };
-  _JsonPipe.\u0275fac = function JsonPipe_Factory(t) {
-    return new (t || _JsonPipe)();
-  };
-  _JsonPipe.\u0275pipe = /* @__PURE__ */ \u0275\u0275definePipe({
-    name: "json",
-    type: _JsonPipe,
-    pure: false,
-    standalone: true
-  });
-  let JsonPipe2 = _JsonPipe;
-  return JsonPipe2;
-})();
 var CommonModule = /* @__PURE__ */ (() => {
   const _CommonModule = class _CommonModule {
   };
@@ -27541,7 +27520,6 @@ var InsertGistComponent = /* @__PURE__ */ (() => {
     openSettingsDialogue() {
       return __async(this, null, function* () {
         const url = addQueryParamToUrl(getAbsoluteUrl("/#/settings"), this.settings ?? {});
-        console.warn("openSettingsDialogue", url);
         const dialogOption = {
           width: 40,
           height: 50,
@@ -27712,9 +27690,6 @@ var AppRoutingModule = /* @__PURE__ */ (() => {
 // src/app/app.component.ts
 var AppComponent = /* @__PURE__ */ (() => {
   const _AppComponent = class _AppComponent {
-    constructor() {
-      this.environment = environment;
-    }
   };
   _AppComponent.\u0275fac = function AppComponent_Factory(t) {
     return new (t || _AppComponent)();
@@ -27722,19 +27697,14 @@ var AppComponent = /* @__PURE__ */ (() => {
   _AppComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
     type: _AppComponent,
     selectors: [["app-root"]],
-    decls: 3,
-    vars: 3,
+    decls: 1,
+    vars: 0,
     template: function AppComponent_Template(rf, ctx) {
       if (rf & 1) {
-        \u0275\u0275text(0);
-        \u0275\u0275pipe(1, "json");
-        \u0275\u0275element(2, "router-outlet");
-      }
-      if (rf & 2) {
-        \u0275\u0275textInterpolate1("Test\n", \u0275\u0275pipeBind1(1, 1, ctx.environment), "\n");
+        \u0275\u0275element(0, "router-outlet");
       }
     },
-    dependencies: [RouterOutlet, JsonPipe],
+    dependencies: [RouterOutlet],
     styles: ["\n\n/*# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFtdLAogICJzb3VyY2VzQ29udGVudCI6IFtdLAogICJtYXBwaW5ncyI6ICIiLAogICJuYW1lcyI6IFtdCn0K */"]
   });
   let AppComponent2 = _AppComponent;
