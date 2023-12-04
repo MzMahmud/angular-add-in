@@ -5,8 +5,10 @@
       <input type="text" name="githubUsername" [(ngModel)]="githubUsername" />
     </label>
   </div>
-  <div class="gists-section">
+  <div>
     <label> Select Default Gist </label>
+  </div>
+  <div class="gists-section">
     <app-gist-selector
       [githubUsername]="githubUsername"
       [(selectedGistId)]="defaultGistId"
