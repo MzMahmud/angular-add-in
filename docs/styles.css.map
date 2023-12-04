@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/styles.css"],
+  "sourcesContent": ["/* You can add global styles to this file, and also import other style files */\r\n* {\r\n  margin: 0;\r\n  padding: 0;\r\n  box-sizing: border-box;\r\n}\r\n\r\n:root {\r\n  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;\r\n}\r\n"],
+  "mappings": ";AACA;AACE,UAAQ;AACR,WAAS;AACT,cAAY;AACd;AAEA;AACE;AAAA,IAAa,aAAa;AAAA,IAAE,qBAAqB;AAAA,IAAE,eAAe;AAAA,IAAE,qBAAqB;AAAA,IAAE,MAAM;AAAA,IAAE,OAAO;AAAA,IAAE;AAC9G;",
+  "names": []
+}
