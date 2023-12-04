@@ -10,8 +10,8 @@
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Git the Gists" />
   <Description DefaultValue="Allows users to access their GitHub gists." />
-  <IconUrl DefaultValue="https://localhost:3000/assets/gh-80.png" />
-  <HighResolutionIconUrl DefaultValue="https://localhost:3000/assets/gh-512.png" />
+  <IconUrl DefaultValue="https://mzmahmud.github.io/angular-add-in/assets/gh-80.png" />
+  <HighResolutionIconUrl DefaultValue="https://mzmahmud.github.io/angular-add-in/assets/gh-512.png" />
   <SupportUrl DefaultValue="https://moazmahmud.com" />
   <AppDomains>
     <AppDomain>https://moazmahmud.com</AppDomain>
@@ -27,7 +27,7 @@
   <FormSettings>
     <Form xsi:type="ItemRead">
       <DesktopSettings>
-        <SourceLocation DefaultValue="https://localhost:3000/" />
+        <SourceLocation DefaultValue="https://mzmahmud.github.io/angular-add-in/" />
         <RequestedHeight>250</RequestedHeight>
       </DesktopSettings>
     </Form>
@@ -94,13 +94,16 @@
       </Hosts>
       <Resources>
         <bt:Images>
-          <bt:Image id="Icon.Code" DefaultValue="https://localhost:3000/assets/code.png" />
+          <bt:Image id="Icon.Code"
+            DefaultValue="https://mzmahmud.github.io/angular-add-in/assets/code.png" />
           <bt:Image id="Icon.DefaultGist"
-            DefaultValue="https://localhost:3000/assets/default-gist.png" />
+            DefaultValue="https://mzmahmud.github.io/angular-add-in/assets/default-gist.png" />
         </bt:Images>
         <bt:Urls>
-          <bt:Url id="Actions.Url" DefaultValue="https://localhost:3000/#/actions" />
-          <bt:Url id="Taskpane.Url" DefaultValue="https://localhost:3000/#/insert-gist" />
+          <bt:Url id="Actions.Url"
+            DefaultValue="https://mzmahmud.github.io/angular-add-in/#/actions" />
+          <bt:Url id="Taskpane.Url"
+            DefaultValue="https://mzmahmud.github.io/angular-add-in/#/insert-gist" />
         </bt:Urls>
         <bt:ShortStrings>
           <bt:String id="GroupLabel" DefaultValue="Git the gist" />
