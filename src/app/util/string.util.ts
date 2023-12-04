@@ -1,8 +1,8 @@
 import { environment } from '../../environments/environment';
 
 export function getAbsoluteUrl(relativeUrl: string) {
-  const baseUrl = window.location.origin + environment.baseHref;
-  return new URL(relativeUrl, baseUrl).toString();
+  const fullUrl = `${window.location.origin}/${environment.baseHref}/${relativeUrl}`;
+  return fullUrl.replaceAll(/\/{2,}/g, '/');
 }
 
 export function addQueryParamToUrl(
