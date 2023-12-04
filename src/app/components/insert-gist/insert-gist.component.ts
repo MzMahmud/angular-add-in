@@ -1,5 +1,5 @@
-import { Component, NgZone } from '@angular/core';
-import { Observable, catchError, mergeMap, of } from 'rxjs';
+import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subscription, catchError, mergeMap, of } from 'rxjs';
 import { Gist, getHtmlContent } from '../../models/gist.model';
 import { Settings } from '../../models/settings.model';
 import { GistService } from '../../services/gist.service';
@@ -12,14 +12,11 @@ import { addQueryParamToUrl, getAbsoluteUrl } from '../../util/string.util';
   templateUrl: './insert-gist.component.html',
   styleUrl: './insert-gist.component.css',
 })
-export class InsertGistComponent {
-  $gists: Observable<Gist[]> = of();
-
+export class InsertGistComponent implements OnDestroy {
   selectedGistId: string | null = null;
-
   errorMessage: string | null = null;
-
-  private settings: Settings | null = null;
+  settings$: Subscription;
+  settings: Settings | null = null;
 
   constructor(
     private officeService: OfficeService,
@@ -27,21 +24,24 @@ export class InsertGistComponent {
     private settingsService: SettingsService,
     private zone: NgZone
   ) {
-    this.$gists = this.settingsService.$settings.pipe(
-      mergeMap((settings) => {
+    this.settings$ = this.settingsService.settings$.subscribe({
+      next: (settings) => {
         this.settings = settings;
-        if (settings == null) {
+        console.log('new InsertGistComponent', this.settings);
+        if (this.settings == null) {
           this.showError('No github username is set!');
-          return of();
+          return;
         }
         this.hideError();
-        return this.gistService.getUserPublicGists(settings.githubUsername);
-      }),
-      catchError((error) => {
+      },
+      error: (error) => {
         console.error('error fetching gists', error);
-        return of([]);
-      })
-    );
+      },
+    });
+  }
+
+  ngOnDestroy() {
+    this.settings$.unsubscribe();
   }
 
   async insertGist(gistId: string | null) {

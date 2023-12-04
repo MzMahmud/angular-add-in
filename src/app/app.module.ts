@@ -8,9 +8,15 @@ import { InsertGistComponent } from './components/insert-gist/insert-gist.compon
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SettingsComponent } from './components/settings/settings.component';
+import { GistSelectorComponent } from './components/gist-selector/gist-selector.component';
 
 @NgModule({
-  declarations: [AppComponent, InsertGistComponent, SettingsComponent],
+  declarations: [
+    AppComponent,
+    InsertGistComponent,
+    SettingsComponent,
+    GistSelectorComponent,
+  ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent],

@@ -9,7 +9,7 @@ import { Settings } from '../models/settings.model';
 export class SettingsService {
   private static SETTINGS_KEY = 'SettingsService.SETTINGS_KEY';
 
-  $settings = new BehaviorSubject<Settings | null>(null);
+  settings$ = new BehaviorSubject<Settings | null>(null);
 
   constructor(private officeService: OfficeService) {
     this.loadSettings();
@@ -19,7 +19,7 @@ export class SettingsService {
     const settings = this.officeService.getFromRoamingSettings<Settings>(
       SettingsService.SETTINGS_KEY
     );
-    this.$settings.next(settings);
+    this.settings$.next(settings);
   }
 
   async updateSettings(settings: Settings) {

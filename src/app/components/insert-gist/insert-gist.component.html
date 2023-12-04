@@ -1,28 +1,6 @@
 <main>
   <div class="gists-section">
-    @for(gist of $gists | async; track gist.id) {
-    <div class="gist">
-      <label>
-        <input
-          type="radio"
-          name="gist"
-          [value]="gist.id"
-          [(ngModel)]="selectedGistId"
-        />
-        {{ gist.title }}
-        <div class="gist__detail">
-          <ul style="margin: 5px 15px">
-            @for (file of gist.files; track file.filename) {
-            <li>{{ file.filename }} ({{ file.language }})</li>
-            }
-          </ul>
-          <div>Last Updated {{ gist.lastUpdated.toLocaleString() }}</div>
-        </div>
-      </label>
-    </div>
-    } @empty {
-    <div class="error-message">No gists found!</div>
-    }
+    <app-gist-selector [githubUsername]="settings?.githubUsername ?? null" />
   </div>
 
   @if(errorMessage != null) {
