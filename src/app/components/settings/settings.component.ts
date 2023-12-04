@@ -1,15 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { OfficeService } from '../../services/office.service';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.css',
 })
-export class SettingsComponent {
+export class SettingsComponent implements OnDestroy {
   githubUsername: string | null = null;
+  private queryParamMap$: Subscription;
 
-  constructor(private officeService: OfficeService) {}
+  constructor(
+    private officeService: OfficeService,
+    private route: ActivatedRoute
+  ) {
+    this.queryParamMap$ = this.route.queryParamMap.subscribe(
+      (queryParamMap) => {
+        this.githubUsername = queryParamMap.get('githubUsername');
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.queryParamMap$.unsubscribe();
+  }
 
   saveSettings() {
     if (!this.isSettingsValid()) {

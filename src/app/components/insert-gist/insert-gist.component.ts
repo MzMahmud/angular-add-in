@@ -5,7 +5,7 @@ import { Settings } from '../../models/settings.model';
 import { GistService } from '../../services/gist.service';
 import { OfficeService } from '../../services/office.service';
 import { SettingsService } from '../../services/settings.service';
-import { getAbsoluteUrl } from '../../util/string.util';
+import { addQueryParamToUrl, getAbsoluteUrl } from '../../util/string.util';
 
 @Component({
   selector: 'app-insert-gist',
@@ -19,6 +19,8 @@ export class InsertGistComponent {
 
   errorMessage: string | null = null;
 
+  private settings: Settings | null = null;
+
   constructor(
     private officeService: OfficeService,
     private gistService: GistService,
@@ -27,6 +29,7 @@ export class InsertGistComponent {
   ) {
     this.$gists = this.settingsService.$settings.pipe(
       mergeMap((settings) => {
+        this.settings = settings;
         if (settings == null) {
           this.showError('No github username is set!');
           return of();
@@ -64,10 +67,12 @@ export class InsertGistComponent {
   }
 
   async openSettingsDialogue() {
-    const res = await this.officeService.displayDialogAsync(
+    const url = addQueryParamToUrl(
       getAbsoluteUrl('/#/settings'),
-      { width: 40, height: 30, displayInIframe: true }
+      this.settings ?? {}
     );
+    const dialogOption = { width: 40, height: 30, displayInIframe: true };
+    const res = await this.officeService.displayDialogAsync(url, dialogOption);
     if (res.status === 'ERROR') {
       this.showError(res.message);
       return;
