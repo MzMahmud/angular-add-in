@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Gist } from '../../models/gist.model';
 import { GistService } from '../../services/gist.service';
@@ -10,7 +10,17 @@ import { GistService } from '../../services/gist.service';
 })
 export class GistSelectorComponent {
   gists$: Observable<Gist[]> = of();
-  selectedGistId: string | null = null;
+
+  private _selectedGistId: string | null = null;
+  @Input()
+  set selectedGistId(value: string | null) {
+    this._selectedGistId = value;
+    this.selectedGistIdChange.emit(this._selectedGistId);
+  }
+  get selectedGistId() {
+    return this._selectedGistId;
+  }
+  @Output() selectedGistIdChange = new EventEmitter<string | null>();
 
   private _githubUsername: string | null = null;
   @Input()

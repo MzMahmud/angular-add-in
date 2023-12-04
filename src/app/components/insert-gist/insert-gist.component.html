@@ -1,6 +1,9 @@
 <main>
   <div class="gists-section">
-    <app-gist-selector [githubUsername]="settings?.githubUsername ?? null" />
+    <app-gist-selector
+      [githubUsername]="settings?.githubUsername ?? null"
+      [(selectedGistId)]="selectedGistId"
+    />
   </div>
 
   @if(errorMessage != null) {

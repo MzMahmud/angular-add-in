@@ -1,6 +1,6 @@
-import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subscription, catchError, mergeMap, of } from 'rxjs';
-import { Gist, getHtmlContent } from '../../models/gist.model';
+import { Component, NgZone, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { getHtmlContent } from '../../models/gist.model';
 import { Settings } from '../../models/settings.model';
 import { GistService } from '../../services/gist.service';
 import { OfficeService } from '../../services/office.service';
@@ -25,23 +25,23 @@ export class InsertGistComponent implements OnDestroy {
     private zone: NgZone
   ) {
     this.settings$ = this.settingsService.settings$.subscribe({
-      next: (settings) => {
-        this.settings = settings;
-        console.log('new InsertGistComponent', this.settings);
-        if (this.settings == null) {
-          this.showError('No github username is set!');
-          return;
-        }
-        this.hideError();
-      },
-      error: (error) => {
-        console.error('error fetching gists', error);
-      },
+      next: this.onSettingsChange.bind(this),
+      error: (error) => console.error('error fetching gists', error),
     });
   }
 
   ngOnDestroy() {
     this.settings$.unsubscribe();
+  }
+
+  private onSettingsChange(settings: Settings | null) {
+    this.settings = settings;
+    this.selectedGistId = null;
+    if (this.settings == null) {
+      this.showError('No github username is set!');
+      return;
+    }
+    this.hideError();
   }
 
   async insertGist(gistId: string | null) {
