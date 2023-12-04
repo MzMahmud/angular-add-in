@@ -1,18 +1,26 @@
 export interface Gist {
   id: string;
   title: string;
-  fileName: string;
   lastUpdated: Date;
+  files: GistFile[];
+}
+
+type GistFile = {
+  filename: string;
   language: string;
-  contentUrl: string;
+  content?: string;
+};
+
+export function getHtmlContent(gist: Gist): string {
+  return gist.files.map(convertToHtml).join('\n');
 }
 
 import showdown from 'showdown';
-
 const converter = new showdown.Converter();
 
-export function getHtmlContent(gist: Gist, content: string) {
-  switch (gist.language) {
+function convertToHtml(gistFile: GistFile): string {
+  const content = gistFile.content ?? '';
+  switch (gistFile.language) {
     case 'HTML':
       return content;
     case 'Markdown':

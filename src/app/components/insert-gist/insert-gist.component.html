@@ -6,12 +6,16 @@
         <input
           type="radio"
           name="gist"
-          [value]="gist"
-          [(ngModel)]="selectedGist"
+          [value]="gist.id"
+          [(ngModel)]="selectedGistId"
         />
         {{ gist.title }}
         <div class="gist__detail">
-          <div>{{ gist.fileName }}</div>
+          <ul style="margin: 5px 15px">
+            @for (file of gist.files; track file.filename) {
+            <li>{{ file.filename }} ({{ file.language }})</li>
+            }
+          </ul>
           <div>Last Updated {{ gist.lastUpdated.toLocaleString() }}</div>
         </div>
       </label>
@@ -31,8 +35,8 @@
     <div>
       <button
         class="ms-Button ms-Button--primary insert-btn"
-        [disabled]="selectedGist == null"
-        (click)="insertGist(selectedGist)"
+        [disabled]="selectedGistId == null"
+        (click)="insertGist(selectedGistId)"
       >
         <span class="ms-Button-label">Insert</span>
       </button>

@@ -15,7 +15,7 @@ import { addQueryParamToUrl, getAbsoluteUrl } from '../../util/string.util';
 export class InsertGistComponent {
   $gists: Observable<Gist[]> = of();
 
-  selectedGist: Gist | null = null;
+  selectedGistId: string | null = null;
 
   errorMessage: string | null = null;
 
@@ -39,18 +39,22 @@ export class InsertGistComponent {
       }),
       catchError((error) => {
         console.error('error fetching gists', error);
-        return of();
+        return of([]);
       })
     );
   }
 
-  async insertGist(gist: Gist | null) {
-    if (gist == null) {
+  async insertGist(gistId: string | null) {
+    if (gistId == null) {
       this.showError(`No gist is selected!`);
       return;
     }
-    const content = await this.gistService.getContent(gist);
-    const htmlContent = getHtmlContent(gist, content);
+    const gistRes = await this.gistService.getGistWithContent(gistId);
+    if (gistRes.status === 'ERROR') {
+      this.showError(gistRes.message);
+      return;
+    }
+    const htmlContent = getHtmlContent(gistRes.value);
     const res = await this.officeService.setSelectedDataAsHtml(htmlContent);
     if (res.status === 'ERROR') {
       this.showError(res.message);
