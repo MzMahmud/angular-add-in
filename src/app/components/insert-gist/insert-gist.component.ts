@@ -76,6 +76,7 @@ export class InsertGistComponent implements OnDestroy {
       getAbsoluteUrl('/#/settings'),
       this.settings ?? {}
     );
+    console.warn('openSettingsDialogue', url);
     const dialogOption = { width: 40, height: 50, displayInIframe: true };
     const res = await this.officeService.displayDialogAsync(url, dialogOption);
     if (res.status === 'ERROR') {
