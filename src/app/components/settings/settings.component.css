@@ -1,0 +1,21 @@
+input[type=text], select {
+  width: 100%;
+  padding: 8px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+section {
+  height: 100vh;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.gists-section {
+  height: 80%;
+  overflow: auto;
+  margin-bottom: 5px;
+}

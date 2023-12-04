@@ -1,0 +1,34 @@
+<main>
+  <div class="gists-section">
+    <app-gist-selector
+      [githubUsername]="settings?.githubUsername ?? null"
+      [(selectedGistId)]="selectedGistId"
+    />
+  </div>
+
+  @if(errorMessage != null) {
+  <div class="error-message">
+    {{ errorMessage }}
+  </div>
+  }
+
+  <div class="btn-container">
+    <div>
+      <button
+        class="ms-Button ms-Button--primary insert-btn"
+        [disabled]="selectedGistId == null"
+        (click)="insertGist(selectedGistId)"
+      >
+        <span class="ms-Button-label">Insert</span>
+      </button>
+    </div>
+    <div>
+      <button
+        class="ms-Button ms-Button--secondary settings-btn"
+        (click)="openSettingsDialogue()"
+      >
+        ⚙️
+      </button>
+    </div>
+  </div>
+</main>

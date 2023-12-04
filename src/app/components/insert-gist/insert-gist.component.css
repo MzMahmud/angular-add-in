@@ -1,0 +1,57 @@
+.header {
+  width: 100%;
+  text-align: center;
+  background-color: azure;
+  padding: 5px;
+}
+
+main {
+  height: 100vh;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.gists-section {
+  height: 90%;
+  overflow: auto;
+  margin-bottom: 20px;
+}
+
+.gist {
+  margin: 10px;
+}
+
+.insert-btn {
+  display: block;
+  width: 100px;
+}
+
+.gist__detail {
+  font-size: .8rem;
+  color: gray;
+  margin-left: 20px;
+}
+
+.error-message {
+  margin-top: 10px;
+  padding: 20px;
+  color: tomato;
+  text-align: center;
+}
+
+.btn-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.insert-btn {
+  width: 60vw;
+}
+
+.settings-btn {
+  margin-left: 5vw;
+}
