@@ -1,5 +1,7 @@
+import { environment } from '../../environments/environment';
+
 export function getAbsoluteUrl(relativeUrl: string) {
-  const baseUrl = window.location.origin;
+  const baseUrl = window.location.origin + environment.baseHref;
   return new URL(relativeUrl, baseUrl).toString();
 }
 
