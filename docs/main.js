@@ -27426,8 +27426,13 @@ var environment = {
 
 // src/app/util/string.util.ts
 function getAbsoluteUrl(relativeUrl) {
-  const fullUrl = `${window.location.origin}/${environment.baseHref}/${relativeUrl}`;
-  return fullUrl.replaceAll(/\/{2,}/g, "/");
+  const base = removeLeadingAndTrailingSlash(window.location.origin);
+  const baseHref = removeLeadingAndTrailingSlash(environment.baseHref);
+  const relative = removeLeadingAndTrailingSlash(relativeUrl);
+  return `${base}/${baseHref}/${relative}`;
+}
+function removeLeadingAndTrailingSlash(s) {
+  return s.replace(RegExp("^/"), "").replace(RegExp("/$"), "");
 }
 function addQueryParamToUrl(url, queryParamObj) {
   const seperator = url.includes("?") ? "&" : "?";
