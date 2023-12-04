@@ -49,8 +49,6 @@
       <Hosts>
         <Host xsi:type="MailHost">
           <DesktopFormFactor>
-            <!-- TODO: to add <Action xsi:type="ExecuteFunction"> FunctionFile is needed. Need r&d
-            to access what is the function  -->
             <FunctionFile resid="Actions.Url" />
             <ExtensionPoint xsi:type="MessageComposeCommandSurface">
               <OfficeTab id="TabDefault">
