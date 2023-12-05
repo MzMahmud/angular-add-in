@@ -1,14 +1,18 @@
 import { environment } from '../../environments/environment';
 
 export function getAbsoluteUrl(relativeUrl: string) {
-  const base = removeLeadingAndTrailingSlash(window.location.origin);
-  const baseHref = removeLeadingAndTrailingSlash(environment.baseHref);
-  const relative = removeLeadingAndTrailingSlash(relativeUrl);
-  return `${base}/${baseHref}/${relative}`;
+  return urlPathJoin(window.location.origin, environment.baseHref, relativeUrl);
 }
 
 function removeLeadingAndTrailingSlash(s: string) {
   return s.replace(RegExp('^/'), '').replace(RegExp('/$'), '');
+}
+
+function urlPathJoin(...paths: string[]) {
+  return paths
+    .map(removeLeadingAndTrailingSlash)
+    .filter((part) => part.length > 0)
+    .join('/');
 }
 
 export function addQueryParamToUrl(
