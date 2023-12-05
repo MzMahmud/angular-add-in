@@ -1,3 +1,9 @@
+/* File: office.service.ts
+ * Description: The current file is the SettingsService, which is an injectable
+ * service that is responsible for managing the application settings. It uses
+ * the OfficeService to interact with the Office JavaScript API and the
+ * BehaviorSubject to manage the settings data.
+ */
 import { Injectable } from '@angular/core';
 import { OfficeService } from './office.service';
 import { BehaviorSubject } from 'rxjs';

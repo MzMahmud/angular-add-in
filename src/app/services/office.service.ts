@@ -1,3 +1,11 @@
+/* File: office.service.ts
+ * Description: This file contains the code for the OfficeService,
+ * which provides a set of methods for interacting with the Office
+ * JavaScript API. The code utilizes the Office.js JavaScript API
+ * and is injectable. Therefore, if the API undergoes changes or
+ * updates, only this service needs to be modified, not the client's code.
+ */
+
 import { Injectable } from '@angular/core';
 import { AsyncResponse } from '../models/response.model';
 

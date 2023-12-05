@@ -1,27 +1,29 @@
-# AngularAddIn
+# Git the Gists
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.3.
+This is an outlook add-in which helps user to insert code snippets from a github user's public gists into their componse email. This is based on the [Tutorial: Build a message compose Outlook add-in](https://learn.microsoft.com/en-us/office/dev/add-ins/tutorials/outlook-tutorial) from Microsoft Learn. In the original article, the app was implemented in Vanilla JS, but this repository implements the add-in in Angular.
 
-## Development server
+## Development Setup
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### Prerequisites
 
-## Code scaffolding
+- Install [Node.js](https://nodejs.org/en) which includes [Node Package Manager](https://docs.npmjs.com/getting-started)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Install dependencies
 
-## Build
+- Run the following command in the root directory.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+  ```
+  npm install
+  ```
 
-## Running unit tests
+### Test the add-in
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- Run the following command in the root directory. When you run this command, the local web server starts.
 
-## Running end-to-end tests
+  ```
+  npm run start:ssl
+  ```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+- Install `git-the-gist-manifest.xml` into _My Add-ins > Custom Add-ins_ in Outlook.
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- Click on the New Mail in Outlook and locate _Git the Gists (Local)_ in the Add-ins tab. Click on it and select _Insert gist_. Configure the GitHub username and default gist from the '⚙️' icon. Note that the GitHub username you select must have some public [gits](https://gist.github.com/). For testing, you can add my GitHub username, `MzMahmud`, which has some public gists.

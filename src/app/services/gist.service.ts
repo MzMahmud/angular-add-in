@@ -1,3 +1,9 @@
+/* File: gist.service.ts
+ * Description: This file contains the code for the GistService, which is responsible
+ * for fetching the public gists for a GitHub user and retrieving the contents of a
+ * specific gist. The code uses the HttpClient to make requests to the GitHub API.
+ */
+
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, firstValueFrom, map, of } from 'rxjs';
