@@ -27405,13 +27405,13 @@ var environment = {
 
 // src/app/util/string.util.ts
 function getAbsoluteUrl(relativeUrl) {
-  const base = removeLeadingAndTrailingSlash(window.location.origin);
-  const baseHref = removeLeadingAndTrailingSlash(environment.baseHref);
-  const relative = removeLeadingAndTrailingSlash(relativeUrl);
-  return `${base}/${baseHref}/${relative}`;
+  return urlPathJoin(window.location.origin, environment.baseHref, relativeUrl);
 }
 function removeLeadingAndTrailingSlash(s) {
   return s.replace(RegExp("^/"), "").replace(RegExp("/$"), "");
+}
+function urlPathJoin(...paths) {
+  return paths.map(removeLeadingAndTrailingSlash).filter((part) => part.length > 0).join("/");
 }
 function addQueryParamToUrl(url, queryParamObj) {
   const seperator = url.includes("?") ? "&" : "?";
