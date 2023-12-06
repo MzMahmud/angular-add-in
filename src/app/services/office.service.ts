@@ -69,6 +69,13 @@ export class OfficeService {
     });
   }
 
+  async removeToRoamingSettings(key: string) {
+    Office.context.roamingSettings.remove(key);
+    return new Promise<void>((resolve) => {
+      Office.context.roamingSettings.saveAsync(() => resolve());
+    });
+  }
+
   messageParent(message: string) {
     Office.context.ui.messageParent(message);
   }
