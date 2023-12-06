@@ -24,6 +24,6 @@ This is an outlook add-in which helps user to insert code snippets from a github
   npm run start:ssl
   ```
 
-- Install `git-the-gist-manifest.xml` into _My Add-ins > Custom Add-ins_ in Outlook.
+- Install `manifest-gist-angular.xml` into _My Add-ins > Custom Add-ins_ in Outlook.
 
 - Click on the New Mail in Outlook and locate _Git the Gists (Local)_ in the Add-ins tab. Click on it and select _Insert gist_. Configure the GitHub username and default gist from the '⚙️' icon. Note that the GitHub username you select must have some public [gits](https://gist.github.com/). For testing, you can add my GitHub username, `MzMahmud`, which has some public gists.
