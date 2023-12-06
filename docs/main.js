@@ -24275,6 +24275,14 @@ var OfficeService = /* @__PURE__ */ (() => {
         });
       });
     }
+    removeToRoamingSettings(key) {
+      return __async(this, null, function* () {
+        Office.context.roamingSettings.remove(key);
+        return new Promise((resolve) => {
+          Office.context.roamingSettings.saveAsync(() => resolve());
+        });
+      });
+    }
     messageParent(message) {
       Office.context.ui.messageParent(message);
     }
@@ -27287,13 +27295,25 @@ var GistSelectorComponent = /* @__PURE__ */ (() => {
       }
     },
     dependencies: [DefaultValueAccessor, RadioControlValueAccessor, NgControlStatus, NgModel, AsyncPipe],
-    styles: ["\n\n.error-message[_ngcontent-%COMP%] {\n  margin-top: 10px;\n  padding: 20px;\n  color: tomato;\n  text-align: center;\n}\n.gist[_ngcontent-%COMP%] {\n  margin: 10px;\n}\n.gist__detail[_ngcontent-%COMP%] {\n  font-size: .8rem;\n  color: gray;\n  margin-left: 20px;\n}\n/*# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsic3JjL2FwcC9jb21wb25lbnRzL2dpc3Qtc2VsZWN0b3IvZ2lzdC1zZWxlY3Rvci5jb21wb25lbnQuY3NzIl0sCiAgInNvdXJjZXNDb250ZW50IjogWyIuZXJyb3ItbWVzc2FnZSB7XHJcbiAgbWFyZ2luLXRvcDogMTBweDtcclxuICBwYWRkaW5nOiAyMHB4O1xyXG4gIGNvbG9yOiB0b21hdG87XHJcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG59XHJcblxyXG4uZ2lzdCB7XHJcbiAgbWFyZ2luOiAxMHB4O1xyXG59XHJcblxyXG4uZ2lzdF9fZGV0YWlsIHtcclxuICBmb250LXNpemU6IC44cmVtO1xyXG4gIGNvbG9yOiBncmF5O1xyXG4gIG1hcmdpbi1sZWZ0OiAyMHB4O1xyXG59XHJcbiJdLAogICJtYXBwaW5ncyI6ICI7QUFBQSxDQUFDO0FBQ0MsY0FBWTtBQUNaLFdBQVM7QUFDVCxTQUFPO0FBQ1AsY0FBWTtBQUNkO0FBRUEsQ0FBQztBQUNDLFVBQVE7QUFDVjtBQUVBLENBQUM7QUFDQyxhQUFXO0FBQ1gsU0FBTztBQUNQLGVBQWE7QUFDZjsiLAogICJuYW1lcyI6IFtdCn0K */"]
+    styles: ["\n\n.gist[_ngcontent-%COMP%] {\n  margin: 10px;\n}\n.gist__detail[_ngcontent-%COMP%] {\n  font-size: 0.8rem;\n  color: gray;\n  margin-left: 20px;\n}\n/*# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsic3JjL2FwcC9jb21wb25lbnRzL2dpc3Qtc2VsZWN0b3IvZ2lzdC1zZWxlY3Rvci5jb21wb25lbnQuY3NzIl0sCiAgInNvdXJjZXNDb250ZW50IjogWyIuZ2lzdCB7XHJcbiAgbWFyZ2luOiAxMHB4O1xyXG59XHJcblxyXG4uZ2lzdF9fZGV0YWlsIHtcclxuICBmb250LXNpemU6IDAuOHJlbTtcclxuICBjb2xvcjogZ3JheTtcclxuICBtYXJnaW4tbGVmdDogMjBweDtcclxufVxyXG4iXSwKICAibWFwcGluZ3MiOiAiO0FBQUEsQ0FBQztBQUNDLFVBQVE7QUFDVjtBQUVBLENBQUM7QUFDQyxhQUFXO0FBQ1gsU0FBTztBQUNQLGVBQWE7QUFDZjsiLAogICJuYW1lcyI6IFtdCn0K */"]
   });
   let GistSelectorComponent2 = _GistSelectorComponent;
   return GistSelectorComponent2;
 })();
 
 // src/app/components/settings/settings.component.ts
+function SettingsComponent_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 7);
+    \u0275\u0275text(1);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext();
+    \u0275\u0275advance(1);
+    \u0275\u0275textInterpolate1(" ", ctx_r0.errorMessage, " ");
+  }
+}
 var SettingsComponent = /* @__PURE__ */ (() => {
   const _SettingsComponent = class _SettingsComponent {
     set githubUsername(value) {
@@ -27308,9 +27328,11 @@ var SettingsComponent = /* @__PURE__ */ (() => {
       this.route = route;
       this._githubUsername = null;
       this.defaultGistId = null;
+      this.errorMessage = null;
       this.queryParamMap$ = this.route.queryParamMap.subscribe((queryParamMap) => {
         this.githubUsername = queryParamMap.get("githubUsername");
         this.defaultGistId = queryParamMap.get("defaultGistId");
+        this.errorMessage = queryParamMap.get("errorMessage");
       });
     }
     ngOnDestroy() {
@@ -27320,6 +27342,7 @@ var SettingsComponent = /* @__PURE__ */ (() => {
       if (!this.isSettingsValid()) {
         return;
       }
+      this.errorMessage = null;
       const settings = {
         githubUsername: this.githubUsername ?? "",
         defaultGistId: this.defaultGistId
@@ -27336,35 +27359,39 @@ var SettingsComponent = /* @__PURE__ */ (() => {
   _SettingsComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
     type: _SettingsComponent,
     selectors: [["app-settings"]],
-    decls: 14,
-    vars: 4,
-    consts: [["type", "text", "name", "githubUsername", 3, "ngModel", "ngModelChange"], [1, "gists-section"], [3, "githubUsername", "selectedGistId", "selectedGistIdChange"], [2, "text-align", "right"], [1, "ms-Button", "ms-Button--primary", 3, "disabled", "click"], [1, "ms-Button-label"]],
+    decls: 15,
+    vars: 5,
+    consts: [["class", "error-message"], ["type", "text", "name", "githubUsername", 3, "ngModel", "ngModelChange"], [1, "gists-section"], [3, "githubUsername", "selectedGistId", "selectedGistIdChange"], [2, "text-align", "right"], [1, "ms-Button", "ms-Button--primary", 3, "disabled", "click"], [1, "ms-Button-label"], [1, "error-message"]],
     template: function SettingsComponent_Template(rf, ctx) {
       if (rf & 1) {
-        \u0275\u0275elementStart(0, "section")(1, "div")(2, "label");
-        \u0275\u0275text(3, " Github Username ");
-        \u0275\u0275elementStart(4, "input", 0);
-        \u0275\u0275listener("ngModelChange", function SettingsComponent_Template_input_ngModelChange_4_listener($event) {
+        \u0275\u0275elementStart(0, "section");
+        \u0275\u0275template(1, SettingsComponent_Conditional_1_Template, 2, 1, "div", 0);
+        \u0275\u0275elementStart(2, "div")(3, "label");
+        \u0275\u0275text(4, " Github Username ");
+        \u0275\u0275elementStart(5, "input", 1);
+        \u0275\u0275listener("ngModelChange", function SettingsComponent_Template_input_ngModelChange_5_listener($event) {
           return ctx.githubUsername = $event;
         });
         \u0275\u0275elementEnd()()();
-        \u0275\u0275elementStart(5, "div")(6, "label");
-        \u0275\u0275text(7, " Select Default Gist ");
+        \u0275\u0275elementStart(6, "div")(7, "label");
+        \u0275\u0275text(8, " Select Default Gist ");
         \u0275\u0275elementEnd()();
-        \u0275\u0275elementStart(8, "div", 1)(9, "app-gist-selector", 2);
-        \u0275\u0275listener("selectedGistIdChange", function SettingsComponent_Template_app_gist_selector_selectedGistIdChange_9_listener($event) {
+        \u0275\u0275elementStart(9, "div", 2)(10, "app-gist-selector", 3);
+        \u0275\u0275listener("selectedGistIdChange", function SettingsComponent_Template_app_gist_selector_selectedGistIdChange_10_listener($event) {
           return ctx.defaultGistId = $event;
         });
         \u0275\u0275elementEnd()();
-        \u0275\u0275elementStart(10, "div", 3)(11, "button", 4);
-        \u0275\u0275listener("click", function SettingsComponent_Template_button_click_11_listener() {
+        \u0275\u0275elementStart(11, "div", 4)(12, "button", 5);
+        \u0275\u0275listener("click", function SettingsComponent_Template_button_click_12_listener() {
           return ctx.saveSettings();
         });
-        \u0275\u0275elementStart(12, "span", 5);
-        \u0275\u0275text(13, "Save");
+        \u0275\u0275elementStart(13, "span", 6);
+        \u0275\u0275text(14, "Save");
         \u0275\u0275elementEnd()()()();
       }
       if (rf & 2) {
+        \u0275\u0275advance(1);
+        \u0275\u0275conditional(1, ctx.errorMessage != null ? 1 : -1);
         \u0275\u0275advance(4);
         \u0275\u0275property("ngModel", ctx.githubUsername);
         \u0275\u0275advance(5);
@@ -27434,6 +27461,12 @@ var SettingsService = /* @__PURE__ */ (() => {
     updateSettings(settings) {
       return __async(this, null, function* () {
         yield this.officeService.setToRoamingSettings(_SettingsService.SETTINGS_KEY, settings);
+        this.loadSettings();
+      });
+    }
+    clearSettings() {
+      return __async(this, null, function* () {
+        yield this.officeService.removeToRoamingSettings(_SettingsService.SETTINGS_KEY);
         this.loadSettings();
       });
     }
@@ -27587,7 +27620,7 @@ var InsertGistComponent = /* @__PURE__ */ (() => {
       }
     },
     dependencies: [GistSelectorComponent],
-    styles: ["\n\n.header[_ngcontent-%COMP%] {\n  width: 100%;\n  text-align: center;\n  background-color: azure;\n  padding: 5px;\n}\nmain[_ngcontent-%COMP%] {\n  height: 100vh;\n  padding: 10px;\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n}\n.gists-section[_ngcontent-%COMP%] {\n  height: 90%;\n  overflow: auto;\n  margin-bottom: 20px;\n}\n.gist[_ngcontent-%COMP%] {\n  margin: 10px;\n}\n.insert-btn[_ngcontent-%COMP%] {\n  display: block;\n  width: 100px;\n}\n.gist__detail[_ngcontent-%COMP%] {\n  font-size: .8rem;\n  color: gray;\n  margin-left: 20px;\n}\n.error-message[_ngcontent-%COMP%] {\n  margin-top: 10px;\n  padding: 20px;\n  color: tomato;\n  text-align: center;\n}\n.btn-container[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  justify-content: space-around;\n}\n.insert-btn[_ngcontent-%COMP%] {\n  width: 60vw;\n}\n.settings-btn[_ngcontent-%COMP%] {\n  margin-left: 5vw;\n}\n/*# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsic3JjL2FwcC9jb21wb25lbnRzL2luc2VydC1naXN0L2luc2VydC1naXN0LmNvbXBvbmVudC5jc3MiXSwKICAic291cmNlc0NvbnRlbnQiOiBbIi5oZWFkZXIge1xyXG4gIHdpZHRoOiAxMDAlO1xyXG4gIHRleHQtYWxpZ246IGNlbnRlcjtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiBhenVyZTtcclxuICBwYWRkaW5nOiA1cHg7XHJcbn1cclxuXHJcbm1haW4ge1xyXG4gIGhlaWdodDogMTAwdmg7XHJcbiAgcGFkZGluZzogMTBweDtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XHJcbiAganVzdGlmeS1jb250ZW50OiBzcGFjZS1iZXR3ZWVuO1xyXG59XHJcblxyXG4uZ2lzdHMtc2VjdGlvbiB7XHJcbiAgaGVpZ2h0OiA5MCU7XHJcbiAgb3ZlcmZsb3c6IGF1dG87XHJcbiAgbWFyZ2luLWJvdHRvbTogMjBweDtcclxufVxyXG5cclxuLmdpc3Qge1xyXG4gIG1hcmdpbjogMTBweDtcclxufVxyXG5cclxuLmluc2VydC1idG4ge1xyXG4gIGRpc3BsYXk6IGJsb2NrO1xyXG4gIHdpZHRoOiAxMDBweDtcclxufVxyXG5cclxuLmdpc3RfX2RldGFpbCB7XHJcbiAgZm9udC1zaXplOiAuOHJlbTtcclxuICBjb2xvcjogZ3JheTtcclxuICBtYXJnaW4tbGVmdDogMjBweDtcclxufVxyXG5cclxuLmVycm9yLW1lc3NhZ2Uge1xyXG4gIG1hcmdpbi10b3A6IDEwcHg7XHJcbiAgcGFkZGluZzogMjBweDtcclxuICBjb2xvcjogdG9tYXRvO1xyXG4gIHRleHQtYWxpZ246IGNlbnRlcjtcclxufVxyXG5cclxuLmJ0bi1jb250YWluZXIge1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAgZmxleC1kaXJlY3Rpb246IHJvdztcclxuICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG4gIGp1c3RpZnktY29udGVudDogc3BhY2UtYXJvdW5kO1xyXG59XHJcblxyXG4uaW5zZXJ0LWJ0biB7XHJcbiAgd2lkdGg6IDYwdnc7XHJcbn1cclxuXHJcbi5zZXR0aW5ncy1idG4ge1xyXG4gIG1hcmdpbi1sZWZ0OiA1dnc7XHJcbn1cclxuIl0sCiAgIm1hcHBpbmdzIjogIjtBQUFBLENBQUM7QUFDQyxTQUFPO0FBQ1AsY0FBWTtBQUNaLG9CQUFrQjtBQUNsQixXQUFTO0FBQ1g7QUFFQTtBQUNFLFVBQVE7QUFDUixXQUFTO0FBQ1QsV0FBUztBQUNULGtCQUFnQjtBQUNoQixtQkFBaUI7QUFDbkI7QUFFQSxDQUFDO0FBQ0MsVUFBUTtBQUNSLFlBQVU7QUFDVixpQkFBZTtBQUNqQjtBQUVBLENBQUM7QUFDQyxVQUFRO0FBQ1Y7QUFFQSxDQUFDO0FBQ0MsV0FBUztBQUNULFNBQU87QUFDVDtBQUVBLENBQUM7QUFDQyxhQUFXO0FBQ1gsU0FBTztBQUNQLGVBQWE7QUFDZjtBQUVBLENBQUM7QUFDQyxjQUFZO0FBQ1osV0FBUztBQUNULFNBQU87QUFDUCxjQUFZO0FBQ2Q7QUFFQSxDQUFDO0FBQ0MsV0FBUztBQUNULGtCQUFnQjtBQUNoQixlQUFhO0FBQ2IsbUJBQWlCO0FBQ25CO0FBRUEsQ0F6QkM7QUEwQkMsU0FBTztBQUNUO0FBRUEsQ0FBQztBQUNDLGVBQWE7QUFDZjsiLAogICJuYW1lcyI6IFtdCn0K */"]
+    styles: ["\n\n.header[_ngcontent-%COMP%] {\n  width: 100%;\n  text-align: center;\n  background-color: azure;\n  padding: 5px;\n}\nmain[_ngcontent-%COMP%] {\n  height: 100vh;\n  padding: 10px;\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n}\n.gists-section[_ngcontent-%COMP%] {\n  height: 90%;\n  overflow: auto;\n  margin-bottom: 20px;\n}\n.gist[_ngcontent-%COMP%] {\n  margin: 10px;\n}\n.insert-btn[_ngcontent-%COMP%] {\n  display: block;\n  width: 100px;\n}\n.gist__detail[_ngcontent-%COMP%] {\n  font-size: 0.8rem;\n  color: gray;\n  margin-left: 20px;\n}\n.btn-container[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  justify-content: space-around;\n}\n.insert-btn[_ngcontent-%COMP%] {\n  width: 60vw;\n}\n.settings-btn[_ngcontent-%COMP%] {\n  margin-left: 5vw;\n}\n/*# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsic3JjL2FwcC9jb21wb25lbnRzL2luc2VydC1naXN0L2luc2VydC1naXN0LmNvbXBvbmVudC5jc3MiXSwKICAic291cmNlc0NvbnRlbnQiOiBbIi5oZWFkZXIge1xyXG4gIHdpZHRoOiAxMDAlO1xyXG4gIHRleHQtYWxpZ246IGNlbnRlcjtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiBhenVyZTtcclxuICBwYWRkaW5nOiA1cHg7XHJcbn1cclxuXHJcbm1haW4ge1xyXG4gIGhlaWdodDogMTAwdmg7XHJcbiAgcGFkZGluZzogMTBweDtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XHJcbiAganVzdGlmeS1jb250ZW50OiBzcGFjZS1iZXR3ZWVuO1xyXG59XHJcblxyXG4uZ2lzdHMtc2VjdGlvbiB7XHJcbiAgaGVpZ2h0OiA5MCU7XHJcbiAgb3ZlcmZsb3c6IGF1dG87XHJcbiAgbWFyZ2luLWJvdHRvbTogMjBweDtcclxufVxyXG5cclxuLmdpc3Qge1xyXG4gIG1hcmdpbjogMTBweDtcclxufVxyXG5cclxuLmluc2VydC1idG4ge1xyXG4gIGRpc3BsYXk6IGJsb2NrO1xyXG4gIHdpZHRoOiAxMDBweDtcclxufVxyXG5cclxuLmdpc3RfX2RldGFpbCB7XHJcbiAgZm9udC1zaXplOiAwLjhyZW07XHJcbiAgY29sb3I6IGdyYXk7XHJcbiAgbWFyZ2luLWxlZnQ6IDIwcHg7XHJcbn1cclxuXHJcbi5idG4tY29udGFpbmVyIHtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGZsZXgtZGlyZWN0aW9uOiByb3c7XHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWFyb3VuZDtcclxufVxyXG5cclxuLmluc2VydC1idG4ge1xyXG4gIHdpZHRoOiA2MHZ3O1xyXG59XHJcblxyXG4uc2V0dGluZ3MtYnRuIHtcclxuICBtYXJnaW4tbGVmdDogNXZ3O1xyXG59XHJcbiJdLAogICJtYXBwaW5ncyI6ICI7QUFBQSxDQUFDO0FBQ0MsU0FBTztBQUNQLGNBQVk7QUFDWixvQkFBa0I7QUFDbEIsV0FBUztBQUNYO0FBRUE7QUFDRSxVQUFRO0FBQ1IsV0FBUztBQUNULFdBQVM7QUFDVCxrQkFBZ0I7QUFDaEIsbUJBQWlCO0FBQ25CO0FBRUEsQ0FBQztBQUNDLFVBQVE7QUFDUixZQUFVO0FBQ1YsaUJBQWU7QUFDakI7QUFFQSxDQUFDO0FBQ0MsVUFBUTtBQUNWO0FBRUEsQ0FBQztBQUNDLFdBQVM7QUFDVCxTQUFPO0FBQ1Q7QUFFQSxDQUFDO0FBQ0MsYUFBVztBQUNYLFNBQU87QUFDUCxlQUFhO0FBQ2Y7QUFFQSxDQUFDO0FBQ0MsV0FBUztBQUNULGtCQUFnQjtBQUNoQixlQUFhO0FBQ2IsbUJBQWlCO0FBQ25CO0FBRUEsQ0FsQkM7QUFtQkMsU0FBTztBQUNUO0FBRUEsQ0FBQztBQUNDLGVBQWE7QUFDZjsiLAogICJuYW1lcyI6IFtdCn0K */"]
   });
   let InsertGistComponent2 = _InsertGistComponent;
   return InsertGistComponent2;
@@ -27620,6 +27653,7 @@ var ActionsComponent = /* @__PURE__ */ (() => {
         const defaultGistId = this.settings?.defaultGistId;
         if (defaultGistId == null) {
           console.error("No default gist selected!");
+          yield this.openSettingsDialogue();
           return;
         }
         const gistRes = yield this.gistService.getGistWithContent(defaultGistId);
@@ -27633,6 +27667,34 @@ var ActionsComponent = /* @__PURE__ */ (() => {
           console.error(`Error iserting default gist with id=${defaultGistId}`, res.message);
           return;
         }
+      });
+    }
+    openSettingsDialogue() {
+      return __async(this, null, function* () {
+        const url = addQueryParamToUrl(getAbsoluteUrl("/#/settings"), {
+          errorMessage: "No default gist selected! Please select one."
+        });
+        const dialogOption = {
+          width: 40,
+          height: 50,
+          displayInIframe: true
+        };
+        const res = yield this.officeService.displayDialogAsync(url, dialogOption);
+        if (res.status === "ERROR") {
+          console.error(res.message);
+          return;
+        }
+        const settingsDialog = res.value;
+        settingsDialog.addEventHandler(Office.EventType.DialogMessageReceived, (response) => __async(this, null, function* () {
+          if ("error" in response) {
+            console.error("dialogue message revived error", response.error);
+            return;
+          }
+          const settings = JSON.parse(response.message);
+          yield this.settingsService.updateSettings(settings);
+          this.insertDefaultGist();
+          settingsDialog.close();
+        }));
       });
     }
   };
