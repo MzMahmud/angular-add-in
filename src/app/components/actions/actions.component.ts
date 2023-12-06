@@ -1,10 +1,11 @@
 import { Component, OnDestroy } from '@angular/core';
-import { Settings } from '../../models/settings.model';
-import { OfficeService } from '../../services/office.service';
-import { GistService } from '../../services/gist.service';
-import { SettingsService } from '../../services/settings.service';
 import { Subscription } from 'rxjs';
 import { getHtmlContent } from '../../models/gist.model';
+import { Settings } from '../../models/settings.model';
+import { GistService } from '../../services/gist.service';
+import { OfficeService } from '../../services/office.service';
+import { SettingsService } from '../../services/settings.service';
+import { addQueryParamToUrl, getAbsoluteUrl } from '../../util/string.util';
 
 @Component({
   selector: 'app-actions',
@@ -46,6 +47,7 @@ export class ActionsComponent implements OnDestroy {
     const defaultGistId = this.settings?.defaultGistId;
     if (defaultGistId == null) {
       console.error('No default gist selected!');
+      await this.openSettingsDialogue();
       return;
     }
     const gistRes = await this.gistService.getGistWithContent(defaultGistId);
@@ -65,5 +67,31 @@ export class ActionsComponent implements OnDestroy {
       );
       return;
     }
+  }
+
+  async openSettingsDialogue() {
+    const url = addQueryParamToUrl(getAbsoluteUrl('/#/settings'), {
+      errorMessage: 'No default gist selected! Please select one.',
+    });
+    const dialogOption = { width: 40, height: 50, displayInIframe: true };
+    const res = await this.officeService.displayDialogAsync(url, dialogOption);
+    if (res.status === 'ERROR') {
+      console.error(res.message);
+      return;
+    }
+    const settingsDialog = res.value;
+    settingsDialog.addEventHandler(
+      Office.EventType.DialogMessageReceived,
+      async (response) => {
+        if ('error' in response) {
+          console.error('dialogue message revived error', response.error);
+          return;
+        }
+        const settings = JSON.parse(response.message) as Settings;
+        await this.settingsService.updateSettings(settings);
+        this.insertDefaultGist();
+        settingsDialog.close();
+      }
+    );
   }
 }

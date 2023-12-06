@@ -22,6 +22,8 @@ export class SettingsComponent implements OnDestroy {
   defaultGistId: string | null = null;
   private queryParamMap$: Subscription;
 
+  errorMessage: string | null = null;
+
   constructor(
     private officeService: OfficeService,
     private route: ActivatedRoute
@@ -30,6 +32,7 @@ export class SettingsComponent implements OnDestroy {
       (queryParamMap) => {
         this.githubUsername = queryParamMap.get('githubUsername');
         this.defaultGistId = queryParamMap.get('defaultGistId');
+        this.errorMessage = queryParamMap.get('errorMessage');
       }
     );
   }
@@ -42,6 +45,7 @@ export class SettingsComponent implements OnDestroy {
     if (!this.isSettingsValid()) {
       return;
     }
+    this.errorMessage = null;
     const settings: Settings = {
       githubUsername: this.githubUsername ?? '',
       defaultGistId: this.defaultGistId,

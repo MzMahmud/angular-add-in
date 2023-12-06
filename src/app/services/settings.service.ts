@@ -29,4 +29,11 @@ export class SettingsService {
     );
     this.loadSettings();
   }
+
+  async clearSettings() {
+    await this.officeService.removeToRoamingSettings(
+      SettingsService.SETTINGS_KEY
+    );
+    this.loadSettings();
+  }
 }
