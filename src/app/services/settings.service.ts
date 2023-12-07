@@ -1,8 +1,6 @@
 /* File: office.service.ts
- * Description: The current file is the SettingsService, which is an injectable
- * service that is responsible for managing the application settings. It uses
- * the OfficeService to interact with the Office JavaScript API and the
- * BehaviorSubject to manage the settings data.
+ * Description: This file manages application settings, such as GitHub username and the ID of the
+ * gist added through "Insert default gist". The settings are stored in Office.context.roamingSettings.
  */
 import { Injectable } from '@angular/core';
 import { OfficeService } from './office.service';
